@@ -2,6 +2,7 @@ package com.sales.security;
 
 import com.sales.model.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -16,8 +17,8 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Примерно: можеш да върнеш роли от базата, тук за кратко само 1
-        return Collections.emptyList(); // Или roles logic
+        // Конвертираме ролята от базата в Spring Security authority
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
     }
 
     @Override
