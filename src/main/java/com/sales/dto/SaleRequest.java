@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Data
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class SaleRequest {
-    private Date date;
+    private OffsetDateTime date;
     private String client;
     private String paymentType;
     private String currency;

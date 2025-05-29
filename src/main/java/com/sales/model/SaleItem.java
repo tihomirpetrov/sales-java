@@ -1,5 +1,6 @@
 package com.sales.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +29,7 @@ public class SaleItem {
     private BigDecimal priceWithVat;
     private BigDecimal total;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "sale_id")
     private Sale sale;

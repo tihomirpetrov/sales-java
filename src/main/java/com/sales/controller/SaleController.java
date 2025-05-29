@@ -5,12 +5,11 @@ import com.sales.model.Sale;
 import com.sales.model.SaleItem;
 import com.sales.service.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -50,5 +49,23 @@ public class SaleController {
 
         Sale saved = saleService.saveSale(sale);
         return ResponseEntity.ok(saved.getId());
+    }
+
+    @GetMapping("/by-date/{date}")
+    public ResponseEntity<List<Sale>> getSalesByDate(
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        List<Sale> sales = saleService.getSalesByDate(date);
+        return ResponseEntity.ok(sales);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Sale>> searchSales(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(required = false) String client,
+            @RequestParam(required = false) String paymentType) {
+
+        List<Sale> sales = saleService.searchSales(startDate, endDate, client, paymentType);
+        return ResponseEntity.ok(sales);
     }
 }
